@@ -15,7 +15,11 @@ public class OccupationDaoMemory implements IOccupationDao {
 
     private Map<String, Occupation> occupations;
 
-
+    /**
+     * OccupationDaoMemory initialization.
+     *
+     * @return Returns an OccupationDaoMemory object
+     */
     public OccupationDaoMemory() {
 
         super ();
@@ -36,6 +40,9 @@ public class OccupationDaoMemory implements IOccupationDao {
         this.occupations.put (o2.getId (), o2);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Occupation> findAllOccupations () {
 
@@ -53,6 +60,9 @@ public class OccupationDaoMemory implements IOccupationDao {
         return list;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Occupation> findDuplicates(String name) {
         // Get the entries.
@@ -70,17 +80,26 @@ public class OccupationDaoMemory implements IOccupationDao {
         return list;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void add (Occupation occupation) {
 
         this.occupations.put (occupation.getId (), occupation);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Occupation searchById(String id) {
         return this.occupations.get(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Occupation searchByName(String name) {
         Set<Map.Entry<String, Occupation>> entries = this.occupations.entrySet ();
@@ -93,6 +112,9 @@ public class OccupationDaoMemory implements IOccupationDao {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDescprition(String id) {
         try {
@@ -104,32 +126,50 @@ public class OccupationDaoMemory implements IOccupationDao {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void modifyName(String id, String newName) {
         this.occupations.get(id).setName(newName);
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void modifyDescription(String id, String newDescription) {
         this.occupations.get(id).setDescription(newDescription);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int size() {
         return this.occupations.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean exists(String id) {
         return (this.occupations.containsKey(id));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void remove(String id) {
         this.occupations.remove(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeAll() {
         this.occupations.clear();
