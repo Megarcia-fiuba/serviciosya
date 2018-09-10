@@ -85,7 +85,7 @@ public class OccupationServiceTest {
         this.occupationService.addOccupation (o2);
         this.occupationService.addOccupation (o3);
 
-        List<Occupation> result = this.occupationDao.findDuplicates ("testing");
+        List<Occupation> result = this.occupationService.findOccupationDuplicates ("testing");
 
         Assert.assertTrue(result.size()==2);
         Assert.assertTrue(result.contains(o1));
