@@ -20,8 +20,14 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     @Override
     public List<Occupation> findAllOccupations() {
         try {
+            // Register the driver.
+            Class.forName ("org.postgresql.Driver");
 
-            Connection cnn= this.getConnection();
+            // Create a new connection.
+            Connection cnn = DriverManager.getConnection ("jdbc:postgresql://localhost:5432/serviciosya", "postgres", "qwerty1234");
+
+
+            //Connection cnn= this.getConnection();
 
             Statement stm = cnn.createStatement ();
 
