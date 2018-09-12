@@ -10,7 +10,7 @@ public abstract class CapgeminiDB {
 
     private static final BasicDataSource dataSource= new BasicDataSource();
 
-    public CapgeminiDB() throws Exception{
+    static{
         try{
 
             Properties pop = new Properties();
@@ -29,8 +29,12 @@ public abstract class CapgeminiDB {
         }
     }
 
-    protected Connection getConnection() throws SQLException {
-        return this.dataSource.getConnection();
+    private CapgeminiDB(){
+
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
 
 
     }

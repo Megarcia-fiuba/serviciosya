@@ -31,7 +31,68 @@ public class OccupationServiceJdbcTest {
 
         List<Occupation> list = this.occupationService.findAllOccupations ();
 
-        Assert.assertTrue (list==null || list.isEmpty ());
+        Assert.assertFalse (list==null || list.isEmpty ());
+    }
+    @Test
+    public void testAddOccupation () {
+
+
+        this.occupationService.setOccupationDao (this.occupationDao);
+
+        Occupation o = new Occupation ("2", "Catador de Ron", "Beber Ron...");
+
+        List<Occupation> init = this.occupationDao.findAllOccupations ();
+
+        this.occupationService.addOccupation (o);
+
+        List<Occupation> end = this.occupationDao.findAllOccupations ();
+
+        Assert.assertTrue (init.size()+1 == end.size());
+    }
+
+    @Test
+    public void testRemoveAll() {
+        this.occupationService.setOccupationDao(this.occupationDao);
+
+        this.occupationService.removeAll();
+
+        Assert.assertTrue(this.occupationService.occupationsQuantity()==0);
+
+        Occupation o1 = new Occupation("1", "testing", "testing");
+        Occupation o2 = new Occupation("2", "testingA", "testing");
+        Occupation o3 = new Occupation("3", "testingB", "testing");
+
+        this.occupationService.addOccupation(o1);
+        this.occupationService.addOccupation(o2);
+        this.occupationService.addOccupation(o3);
+
+        Assert.assertTrue(this.occupationService.occupationsQuantity()==3);
+
+        this.occupationService.removeAll();
+
+        Assert.assertTrue(this.occupationService.occupationsQuantity()==0);
+
+    }
+
+
+    @Test
+    public void testFindDuplicates(){
+        this.occupationService.setOccupationDao (this.occupationDao);
+
+        this.occupationService.removeAll();
+        Occupation o1= new Occupation("1","testing","testing");
+        Occupation o2= new Occupation("2","testing","testing");
+        Occupation o3= new Occupation("3","testingB","testing");
+        this.occupationService.addOccupation (o1);
+        this.occupationService.addOccupation (o2);
+        this.occupationService.addOccupation (o3);
+
+        List<Occupation> result = this.occupationService.findOccupationDuplicates ("testing");
+
+        System.out.print(result.size());
+        Assert.assertTrue(result.get(0).getName().equals(o1.getName()));
+        Assert.assertTrue(result.get(1).getName().equals("testing"));
+
     }
 
 

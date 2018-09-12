@@ -10,54 +10,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.postgresql.jdbc4.*;
 
-public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
+public class OccupationJdbcDao implements IOccupationDao   {
 
-
-    public OccupationJdbcDao() throws Exception {
-    }
 
     @Override
     public List<Occupation> findAllOccupations() {
+        // Build the occupation list.
+        List<Occupation> list = new ArrayList<>();
         try {
-            // Register the driver.
-            Class.forName ("org.postgresql.Driver");
-
-            // Create a new connection.
-            Connection cnn = DriverManager.getConnection ("jdbc:postgresql://localhost:5432/serviciosya", "postgres", "qwerty1234");
 
 
-            //Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
             // Result set get the result of the SQL query
             ResultSet resultSet = stm.executeQuery ("SELECT * FROM \"OCCUPATION\"");
 
-            // Build the occupation list.
-            List<Occupation> list = new ArrayList<>();
             while (resultSet.next()) {
-                int id= resultSet.getInt("\"ID\"");
-                String name= resultSet.getString("\"NAME\"");
-                String description = resultSet.getString("\"DESCRIPTION\"");
+                int id= resultSet.getInt("ID");
+                String name= resultSet.getString("NAME");
+                String description = resultSet.getString("DESCRIPTION");
 
                 Occupation oc = new Occupation(String.valueOf(id),name,description);
 
                 list.add (oc);
             }
 
-            // Return the occupations.
-            return list;
+            cnn.close();
 
         } catch (Exception e) {
             throw new DaoException(e);
         }
+
+        // Return the occupations.
+        return list;
     }
 
     @Override
     public List<Occupation> findDuplicates(String name) {
         try {
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -67,10 +62,10 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
             // Build the occupation list.
             List<Occupation> list = new ArrayList<>();
             while (resultSet.next()) {
-                String res_name= resultSet.getString("\"NAME\"");
+                String res_name= resultSet.getString("NAME");
                 if (name.equals(res_name)) {
-                    int id= resultSet.getInt("\"ID\"");
-                    String description = resultSet.getString("\"DESCRIPTION\"");
+                    int id= resultSet.getInt("ID");
+                    String description = resultSet.getString("DESCRIPTION");
                     Occupation oc = new Occupation(String.valueOf(id),res_name,description);
 
                     list.add (oc);
@@ -89,10 +84,17 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     @Override
     public void add(Occupation occupation) {
         try {
-            Connection cnn= this.getConnection();
+            // Register the driver.
+            Class.forName ("org.postgresql.Driver");
+
+            // Create a new connection.
+            Connection cnn = DriverManager.getConnection ("jdbc:postgresql://localhost:5432/serviciosya", "postgres", "qwerty1234");
+
+            //Connection cnn= this.getConnection();
 
             cnn.createStatement ().
-                    executeUpdate ("INSERT INTO \"COUNTRY\" (\"NAME\",\"DESCRIPTION\") VALUES ('"+occupation.getName()+"','"+occupation.getDescription()+"')");
+                    executeUpdate ("INSERT INTO \"OCCUPATION\" (\"NAME\",\"DESCRIPTION\") VALUES ('"+occupation.getName()+"','"+occupation.getDescription()+"')");
+            cnn.close();
 
         } catch (Exception e) {
 
@@ -105,7 +107,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     public Occupation searchById(String id)  {
         try {
 
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -113,9 +115,9 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
             ResultSet resultSet = stm.executeQuery ("SELECT * FROM \"OCCUPATION\" WHERE \"ID\"="+id);
 
             if(!resultSet.isBeforeFirst()){
-                int res_id= resultSet.getInt("\"ID\"");
-                String name= resultSet.getString("\"NAME\"");
-                String description = resultSet.getString("\"DESCRIPTION\"");
+                int res_id= resultSet.getInt("ID");
+                String name= resultSet.getString("NAME");
+                String description = resultSet.getString("DESCRIPTION");
 
                 return new Occupation(String.valueOf(res_id),name,description);
             }
@@ -129,7 +131,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     public Occupation searchByName(String name) {
         try {
 
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -137,9 +139,9 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
             ResultSet resultSet = stm.executeQuery ("SELECT * FROM \"OCCUPATION\" WHERE \"NAME\" ="+name);
 
             if(!resultSet.isBeforeFirst()){
-                int id= resultSet.getInt("\"ID\"");
-                String res_name= resultSet.getString("\"NAME\"");
-                String description = resultSet.getString("\"DESCRIPTION\"");
+                int id= resultSet.getInt("ID");
+                String res_name= resultSet.getString("NAME");
+                String description = resultSet.getString("DESCRIPTION");
 
                 return new Occupation(String.valueOf(id),res_name,description);
             }
@@ -155,7 +157,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
 
         try {
 
-            Connection cnn= this.getConnection();
+            Connection cnn=CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -163,7 +165,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
             ResultSet resultSet = stm.executeQuery ("SELECT * FROM \"OCCUPATION\" WHERE \"ID\"="+id);
 
             if(!resultSet.isBeforeFirst()){
-                return resultSet.getString("\"DESCRIPTION\"");
+                return resultSet.getString("DESCRIPTION");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +177,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     public boolean exists(String id) {
         try {
 
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -192,7 +194,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     @Override
     public void modifyName(String id, String newName) {
         try{
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -206,7 +208,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     @Override
     public void modifyDescription(String id, String newDescription) {
         try{
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -220,13 +222,14 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
 
     @Override
     public int size() {
-        return 0;
+        List<Occupation> list= this.findAllOccupations();
+        return list.size();
     }
 
     @Override
     public void remove(String id) {
         try{
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
@@ -241,7 +244,7 @@ public class OccupationJdbcDao extends CapgeminiDB implements IOccupationDao   {
     @Override
     public void removeAll() {
         try{
-            Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
