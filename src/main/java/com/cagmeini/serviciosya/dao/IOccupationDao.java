@@ -39,7 +39,7 @@ public interface IOccupationDao {
      *
      *  @return Return an occupation or null.
      * */
-    Occupation searchById(String id);
+    Occupation searchById(int id);
 
     /**
      *
@@ -57,7 +57,7 @@ public interface IOccupationDao {
      *
      *  @return Return a String or null.
      * */
-    String getDescprition(String id);
+    String getDescprition(int id);
 
     /**
      *
@@ -66,21 +66,21 @@ public interface IOccupationDao {
      *
      *  @return Returns True if found or False if not
      * */
-    boolean exists(String id);
+    boolean exists(int id);
 
     /**
      *
      *  <p> Receives an occupation id and a new name for it. Then changes its name if found.
      *
      * */
-    void modifyName(String id,String newName);
+    void modifyName(int id,String newName);
 
     /**
      *
      *  <p> Receives an occupation id and a new description for it. Then changes its description if found.
      *
      * */
-    void modifyDescription(String id,String newDescription);
+    void modifyDescription(int id,String newDescription);
 
     /**
      *
@@ -95,7 +95,7 @@ public interface IOccupationDao {
      *  <p> Receives an occupation id and removes it.
      *
      * */
-    void remove (String id);
+    void remove (int id);
 
     /**
      *

@@ -2,7 +2,6 @@ package com.cagmeini.serviciosya.service.test;
 
 import com.cagmeini.serviciosya.beans.domain.Occupation;
 import com.cagmeini.serviciosya.dao.IOccupationDao;
-import com.cagmeini.serviciosya.dao.OccupationDaoMemory;
 import com.cagmeini.serviciosya.dao.OccupationJdbcDao;
 import com.cagmeini.serviciosya.service.OccupationService;
 import org.junit.Assert;

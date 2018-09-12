@@ -45,7 +45,7 @@ public class OccupationService {
         this.occupationDao.add (occupation);
     }
 
-    public Occupation findOccupationByid(String id ){
+    public Occupation findOccupationByid(int id ){
         return this.occupationDao.searchById(id);
     }
 
@@ -53,19 +53,19 @@ public class OccupationService {
         return this.occupationDao.searchByName(name);
     }
 
-    public String getOccupationDescription(String id){
+    public String getOccupationDescription(int id){
         return this.occupationDao.getDescprition(id);
     }
 
-    public void modifyOccupationName(String id, String newName){
+    public void modifyOccupationName(int id, String newName){
         this.occupationDao.modifyName(id,newName);
     }
 
-    public void modifyOccupationDescription(String id, String newDescription){
+    public void modifyOccupationDescription(int id, String newDescription){
         this.occupationDao.modifyDescription(id,newDescription);
     }
 
-    public boolean occupationExists(String id){
+    public boolean occupationExists(int id){
         return this.occupationDao.exists(id);
     }
 
@@ -73,7 +73,7 @@ public class OccupationService {
         return this.occupationDao.size();
     }
 
-    public void removeOccupation(String id){
+    public void removeOccupation(int id){
         this.occupationDao.remove(id);
     }
 

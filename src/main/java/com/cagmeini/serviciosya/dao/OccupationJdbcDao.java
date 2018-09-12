@@ -10,18 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.postgresql.jdbc4.*;
+import org.apache.log4j.Logger;
 
 public class OccupationJdbcDao implements IOccupationDao   {
 
+    private static final Logger logger = Logger.getLogger (OccupationJdbcDao.class);
 
     @Override
     public List<Occupation> findAllOccupations() {
         // Build the occupation list.
         List<Occupation> list = new ArrayList<>();
         try {
-
-
             Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
@@ -34,12 +33,10 @@ public class OccupationJdbcDao implements IOccupationDao   {
                 String name= resultSet.getString("NAME");
                 String description = resultSet.getString("DESCRIPTION");
 
-                Occupation oc = new Occupation(String.valueOf(id),name,description);
+                Occupation oc = new Occupation(id,name,description);
 
                 list.add (oc);
             }
-
-            cnn.close();
 
         } catch (Exception e) {
             throw new DaoException(e);
@@ -66,7 +63,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
                 if (name.equals(res_name)) {
                     int id= resultSet.getInt("ID");
                     String description = resultSet.getString("DESCRIPTION");
-                    Occupation oc = new Occupation(String.valueOf(id),res_name,description);
+                    Occupation oc = new Occupation(id,res_name,description);
 
                     list.add (oc);
                 }
@@ -84,17 +81,10 @@ public class OccupationJdbcDao implements IOccupationDao   {
     @Override
     public void add(Occupation occupation) {
         try {
-            // Register the driver.
-            Class.forName ("org.postgresql.Driver");
-
-            // Create a new connection.
-            Connection cnn = DriverManager.getConnection ("jdbc:postgresql://localhost:5432/serviciosya", "postgres", "qwerty1234");
-
-            //Connection cnn= this.getConnection();
+            Connection cnn= CapgeminiDB.getConnection();
 
             cnn.createStatement ().
                     executeUpdate ("INSERT INTO \"OCCUPATION\" (\"NAME\",\"DESCRIPTION\") VALUES ('"+occupation.getName()+"','"+occupation.getDescription()+"')");
-            cnn.close();
 
         } catch (Exception e) {
 
@@ -104,7 +94,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
     }
 
     @Override
-    public Occupation searchById(String id)  {
+    public Occupation searchById(int id)  {
         try {
 
             Connection cnn= CapgeminiDB.getConnection();
@@ -119,7 +109,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
                 String name= resultSet.getString("NAME");
                 String description = resultSet.getString("DESCRIPTION");
 
-                return new Occupation(String.valueOf(res_id),name,description);
+                return new Occupation(res_id,name,description);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,7 +133,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
                 String res_name= resultSet.getString("NAME");
                 String description = resultSet.getString("DESCRIPTION");
 
-                return new Occupation(String.valueOf(id),res_name,description);
+                return new Occupation(id,res_name,description);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,7 +143,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
     }
 
     @Override
-    public String getDescprition(String id) {
+    public String getDescprition(int id) {
 
         try {
 
@@ -174,7 +164,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
     }
 
     @Override
-    public boolean exists(String id) {
+    public boolean exists(int id) {
         try {
 
             Connection cnn= CapgeminiDB.getConnection();
@@ -192,7 +182,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
     }
 
     @Override
-    public void modifyName(String id, String newName) {
+    public void modifyName(int id, String newName) {
         try{
             Connection cnn= CapgeminiDB.getConnection();
 
@@ -206,7 +196,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
     }
 
     @Override
-    public void modifyDescription(String id, String newDescription) {
+    public void modifyDescription(int id, String newDescription) {
         try{
             Connection cnn= CapgeminiDB.getConnection();
 
@@ -227,7 +217,7 @@ public class OccupationJdbcDao implements IOccupationDao   {
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(int id) {
         try{
             Connection cnn= CapgeminiDB.getConnection();
 
@@ -237,8 +227,6 @@ public class OccupationJdbcDao implements IOccupationDao   {
         }catch (Exception e){
             throw new DaoException(e);
         }
-
-
     }
 
     @Override
