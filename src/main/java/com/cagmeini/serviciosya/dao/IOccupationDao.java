@@ -7,7 +7,7 @@ import java.util.List;
 import com.cagmeini.serviciosya.beans.domain.Occupation;
 
 
-public interface IOccupationDao {
+public interface IOccupationDao extends IDao<Occupation, Integer> {
 
     /**
      *
@@ -15,7 +15,7 @@ public interface IOccupationDao {
      *
      *  @return Return a list of occupations
      * */
-    List<Occupation> findAllOccupations ();
+    List<Occupation> findall ();
 
     /**
      *
@@ -30,7 +30,7 @@ public interface IOccupationDao {
      *
      *  <p> Adds an occupation
      * */
-    void add (Occupation occupation);
+    void create (Occupation occupation);
 
     /**
      *
@@ -39,16 +39,8 @@ public interface IOccupationDao {
      *
      *  @return Return an occupation or null.
      * */
-    Occupation searchById(int id);
+    Occupation findById(Integer id);
 
-    /**
-     *
-     *  <p> Receives an occupation name
-     *      Returns an occupation with the same name or null if there is none
-     *
-     *  @return Return an occupation or null.
-     * */
-    Occupation searchByName(String name);
 
     /**
      *
@@ -73,14 +65,8 @@ public interface IOccupationDao {
      *  <p> Receives an occupation id and a new name for it. Then changes its name if found.
      *
      * */
-    void modifyName(int id,String newName);
+    void update(Occupation oc);
 
-    /**
-     *
-     *  <p> Receives an occupation id and a new description for it. Then changes its description if found.
-     *
-     * */
-    void modifyDescription(int id,String newDescription);
 
     /**
      *
@@ -95,7 +81,7 @@ public interface IOccupationDao {
      *  <p> Receives an occupation id and removes it.
      *
      * */
-    void remove (int id);
+    void delete (Integer id);
 
     /**
      *
