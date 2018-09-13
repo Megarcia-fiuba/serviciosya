@@ -1,18 +1,18 @@
-package com.cagmeini.serviciosya.dao;
+package com.cagmeini.serviciosya.dao.jdbc;
 
 import com.cagmeini.serviciosya.beans.domain.Occupation;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import com.cagmeini.serviciosya.dao.DaoException;
+import com.cagmeini.serviciosya.dao.IOccupationDao;
 import org.apache.log4j.Logger;
 
-public class OccupationJdbcDao implements IOccupationDao   {
+public class OccupationJdbcDao implements IOccupationDao {
 
     private static final Logger logger = Logger.getLogger (OccupationJdbcDao.class);
 

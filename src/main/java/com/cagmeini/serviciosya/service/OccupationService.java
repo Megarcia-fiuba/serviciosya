@@ -33,7 +33,7 @@ public class OccupationService {
 
     public List<Occupation> findAllOccupations () {
 
-        return this.occupationDao.findAllOccupations ();
+        return this.occupationDao.findall ();
     }
 
     public List<Occupation> findOccupationDuplicates(String occupationName){
@@ -42,28 +42,22 @@ public class OccupationService {
 
     public void addOccupation (Occupation occupation) {
 
-        this.occupationDao.add (occupation);
+        this.occupationDao.create (occupation);
     }
 
     public Occupation findOccupationByid(int id ){
-        return this.occupationDao.searchById(id);
+        return this.occupationDao.findById(id);
     }
 
-    public Occupation findOccupationByName(String name){
-        return this.occupationDao.searchByName(name);
-    }
 
     public String getOccupationDescription(int id){
         return this.occupationDao.getDescprition(id);
     }
 
-    public void modifyOccupationName(int id, String newName){
-        this.occupationDao.modifyName(id,newName);
+    public void modifyOccupationName(Occupation update){
+        this.occupationDao.update(update);
     }
 
-    public void modifyOccupationDescription(int id, String newDescription){
-        this.occupationDao.modifyDescription(id,newDescription);
-    }
 
     public boolean occupationExists(int id){
         return this.occupationDao.exists(id);
@@ -74,7 +68,7 @@ public class OccupationService {
     }
 
     public void removeOccupation(int id){
-        this.occupationDao.remove(id);
+        this.occupationDao.delete(id);
     }
 
     public void removeAll(){

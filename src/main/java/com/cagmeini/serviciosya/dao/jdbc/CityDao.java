@@ -1,6 +1,8 @@
-package com.cagmeini.serviciosya.dao;
+package com.cagmeini.serviciosya.dao.jdbc;
 
-import com.cagmeini.serviciosya.beans.domain.Country;
+import com.cagmeini.serviciosya.beans.domain.City;
+import com.cagmeini.serviciosya.dao.DaoException;
+import com.cagmeini.serviciosya.dao.ICityDao;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -9,17 +11,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryDao implements ICountryDao {
+public class CityDao implements ICityDao {
 
-    private static final Logger logger = Logger.getLogger (CountryDao.class);
+    private static final Logger logger = Logger.getLogger (CityDao.class);
 
     @Override
-    public void create(Country target) {
+    public void create(City target) {
         try {
             Connection cnn= CapgeminiDB.getConnection();
 
             cnn.createStatement ().
-                    executeUpdate ("INSERT INTO country (name) VALUES ('"+target.getName()+"')");
+                    executeUpdate ("INSERT INTO city (name,province_id) VALUES ('"+target.getName()+"','"+ target.getProvinceId()+"')");
 
 
         } catch (Exception e) {
@@ -30,13 +32,13 @@ public class CountryDao implements ICountryDao {
     }
 
     @Override
-    public void update(Country target) {
+    public void update(City target) {
         try{
             Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
-            int r = stm.executeUpdate ("UPDATE country SET name = '"+target.getName()+"' WHERE id ="+String.valueOf(target.getId()));
+            int r = stm.executeUpdate ("UPDATE city SET name = '"+target.getName()+"',province_id='"+target.getProvinceId()+"' WHERE id ="+target.getId());
 
         }catch (Exception e){
             throw new DaoException(e);
@@ -51,7 +53,7 @@ public class CountryDao implements ICountryDao {
 
             Statement stm = cnn.createStatement ();
 
-            int r = stm.executeUpdate ("DELETE FROM country  WHERE id="+String.valueOf(id));
+            int r = stm.executeUpdate ("DELETE FROM city  WHERE id="+id);
         }catch (Exception e){
             throw new DaoException(e);
         }
@@ -59,9 +61,9 @@ public class CountryDao implements ICountryDao {
     }
 
     @Override
-    public List<Country> findall() {
-        // Countriess list.
-        List<Country> countries = new ArrayList<>();
+    public List<City> findall() {
+        // Cities list.
+        List<City> cities = new ArrayList<>();
 
         try {
 
@@ -73,7 +75,7 @@ public class CountryDao implements ICountryDao {
 
 
             // Execute the query.
-            String sql = "select * from country";
+            String sql = "select * from city";
             logger.debug (String.format ("Executing query [%s]", sql));
             ResultSet rs = statement.executeQuery (sql);
 
@@ -82,27 +84,28 @@ public class CountryDao implements ICountryDao {
 
             while (rs.next ()) {
 
-                Country o = new Country ();
+                City o = new City ();
                 o.setId (rs.getInt ("id"));
                 o.setName (rs.getString ("name"));
+                o.setProvinceId(rs.getInt("province_id"));
 
                 // Add new object to list.
-                countries.add (o);
+                cities.add (o);
             }
 
         } catch (Exception e) {
 
             // Failure.
-            logger.error ("Failure searching all countries");
-            throw new DaoException ("Failure searching all countries", e);
+            logger.error ("Failure searching all cities");
+            throw new DaoException ("Failure searching all cities", e);
         }
 
         // Return results.
-        return countries;
+        return cities;
     }
 
     @Override
-    public Country findById(Integer id) {
+    public City findById(Integer id) {
         try {
 
             Connection cnn= CapgeminiDB.getConnection();
@@ -110,13 +113,14 @@ public class CountryDao implements ICountryDao {
             Statement stm = cnn.createStatement ();
 
             // Result set get the result of the SQL query
-            ResultSet resultSet = stm.executeQuery ("SELECT * FROM country WHERE id="+String.valueOf(id));
+            ResultSet resultSet = stm.executeQuery ("SELECT * FROM city WHERE id="+id);
 
             if(!resultSet.isBeforeFirst()){
-                Country c =new Country();
-                c.setId(resultSet.getInt("name"));
-                c.setName(resultSet.getString("name"));
-                return c;
+                City o =new City();
+                o.setId(resultSet.getInt("name"));
+                o.setName(resultSet.getString("name"));
+                o.setProvinceId(resultSet.getInt("province_id"));
+                return o;
             }
         } catch (Exception e) {
             e.printStackTrace();

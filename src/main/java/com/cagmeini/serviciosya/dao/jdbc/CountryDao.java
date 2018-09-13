@@ -1,7 +1,8 @@
-package com.cagmeini.serviciosya.dao;
+package com.cagmeini.serviciosya.dao.jdbc;
 
-
-import com.cagmeini.serviciosya.beans.domain.Province;
+import com.cagmeini.serviciosya.beans.domain.Country;
+import com.cagmeini.serviciosya.dao.DaoException;
+import com.cagmeini.serviciosya.dao.ICountryDao;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -10,17 +11,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProvinceDao implements IProvinceDao {
+public class CountryDao  {
 
-    private static final Logger logger = Logger.getLogger (ProvinceDao.class);
+    private static final Logger logger = Logger.getLogger (CountryDao.class);
 
-    @Override
-    public void create(Province target) {
+
+    public void create(Country target) {
         try {
             Connection cnn= CapgeminiDB.getConnection();
 
             cnn.createStatement ().
-                    executeUpdate ("INSERT INTO province (name,country_id) VALUES ('"+target.getName()+"','"+ target.getCountryId()+"')");
+                    executeUpdate ("INSERT INTO country (name) VALUES ('"+target.getName()+"')");
 
 
         } catch (Exception e) {
@@ -30,14 +31,14 @@ public class ProvinceDao implements IProvinceDao {
 
     }
 
-    @Override
-    public void update(Province target) {
+
+    public void update(Country target) {
         try{
             Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
-            int r = stm.executeUpdate ("UPDATE province SET name = '"+target.getName()+"',country_id='"+target.getCountryId()+"' WHERE id ="+target.getId());
+            int r = stm.executeUpdate ("UPDATE country SET name = '"+target.getName()+"' WHERE id ="+String.valueOf(target.getId()));
 
         }catch (Exception e){
             throw new DaoException(e);
@@ -45,24 +46,24 @@ public class ProvinceDao implements IProvinceDao {
 
     }
 
-    @Override
+
     public void delete(Integer id) {
         try{
             Connection cnn= CapgeminiDB.getConnection();
 
             Statement stm = cnn.createStatement ();
 
-            int r = stm.executeUpdate ("DELETE FROM province  WHERE id="+id);
+            int r = stm.executeUpdate ("DELETE FROM country  WHERE id="+String.valueOf(id));
         }catch (Exception e){
             throw new DaoException(e);
         }
 
     }
 
-    @Override
-    public List<Province> findall() {
-        // Provinces list.
-        List<Province> provinces = new ArrayList<>();
+
+    public List<Country> findall() {
+        // Countriess list.
+        List<Country> countries = new ArrayList<>();
 
         try {
 
@@ -74,7 +75,7 @@ public class ProvinceDao implements IProvinceDao {
 
 
             // Execute the query.
-            String sql = "select * from province";
+            String sql = "select * from country";
             logger.debug (String.format ("Executing query [%s]", sql));
             ResultSet rs = statement.executeQuery (sql);
 
@@ -83,28 +84,27 @@ public class ProvinceDao implements IProvinceDao {
 
             while (rs.next ()) {
 
-                Province o = new Province ();
+                Country o = new Country ();
                 o.setId (rs.getInt ("id"));
                 o.setName (rs.getString ("name"));
-                o.setCountryId(rs.getInt("country_id"));
 
                 // Add new object to list.
-                provinces.add (o);
+                countries.add (o);
             }
 
         } catch (Exception e) {
 
             // Failure.
-            logger.error ("Failure searching all provinces");
-            throw new DaoException ("Failure searching all provinces", e);
+            logger.error ("Failure searching all countries");
+            throw new DaoException ("Failure searching all countries", e);
         }
 
         // Return results.
-        return provinces;
+        return countries;
     }
 
-    @Override
-    public Province findById(Integer id) {
+
+    public Country findById(Integer id) {
         try {
 
             Connection cnn= CapgeminiDB.getConnection();
@@ -112,14 +112,13 @@ public class ProvinceDao implements IProvinceDao {
             Statement stm = cnn.createStatement ();
 
             // Result set get the result of the SQL query
-            ResultSet resultSet = stm.executeQuery ("SELECT * FROM province WHERE id="+id);
+            ResultSet resultSet = stm.executeQuery ("SELECT * FROM country WHERE id="+String.valueOf(id));
 
             if(!resultSet.isBeforeFirst()){
-                Province o =new Province();
-                o.setId(resultSet.getInt("name"));
-                o.setName(resultSet.getString("name"));
-                o.setCountryId(resultSet.getInt("country_id"));
-                return o;
+                Country c =new Country();
+                c.setId(resultSet.getInt("name"));
+                c.setName(resultSet.getString("name"));
+                return c;
             }
         } catch (Exception e) {
             e.printStackTrace();
