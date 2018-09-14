@@ -1,6 +1,9 @@
 package com.capgemini.serviciosya.beans.entity;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity (name = "Occupation")
 @Table (name = "occupation")
@@ -15,12 +18,15 @@ public class OccupationEntity {
     @Column (name = "name", length = 48, nullable = false)
     private String name;
 
-    @Column (name = "name", length = 128, nullable = false)
+    @Column (name = "description", length = 128, nullable = false)
     private String description;
 
     @ManyToOne
     @JoinColumn (name="parent")
     private OccupationEntity occupation;
+
+    @ManyToMany(mappedBy = "occupations")
+    private Set<ProviderEntity> Providers = new HashSet<>();
 
 
     public OccupationEntity() {

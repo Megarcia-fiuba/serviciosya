@@ -18,15 +18,15 @@ public class CityEntity {
 
     @ManyToOne
     @JoinColumn (name="Province_id")
-    private ProvinceEntity country;
+    private ProvinceEntity province;
 
     public CityEntity() {
     }
 
-    public CityEntity(int id, String name, ProvinceEntity country) {
+    public CityEntity(int id, String name, ProvinceEntity province) {
         this.id = id;
         this.name = name;
-        this.country = country;
+        this.province = province;
     }
 
     public int getId() {
@@ -45,11 +45,11 @@ public class CityEntity {
         this.name = name;
     }
 
-    public ProvinceEntity getCountry() {
-        return country;
+    public ProvinceEntity getProvince() {
+        return province;
     }
 
-    public void setCountry(ProvinceEntity country) {
-        this.country = country;
+    public void setProvince(ProvinceEntity province) {
+        this.province = province;
     }
 }

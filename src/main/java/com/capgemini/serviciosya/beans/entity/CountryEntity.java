@@ -1,6 +1,8 @@
 package com.capgemini.serviciosya.beans.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity (name = "Country")
 @Table (name = "country")
@@ -14,6 +16,9 @@ public class CountryEntity {
 
     @Column (name= "name", length = 48, nullable = false)
     private String name;
+
+    @OneToMany (mappedBy = "country", fetch = FetchType.EAGER)
+    private Set<ProvinceEntity> provinces = new HashSet<>();
 
     public CountryEntity() {
     }
@@ -37,5 +42,9 @@ public class CountryEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<ProvinceEntity> getProvinces(){
+        return provinces;
     }
 }
