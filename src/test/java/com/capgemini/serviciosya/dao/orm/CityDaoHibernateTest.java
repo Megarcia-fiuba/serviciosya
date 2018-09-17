@@ -92,7 +92,7 @@ public class CityDaoHibernateTest {
 
         List<CityEntity> co=this.dao.findall();
         List<String> l = new ArrayList<>();
-        co.stream().map(City ->l.add(City.getName()) );
+        co.stream().map(city ->l.add(city.getName()) );
         Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
 
     }

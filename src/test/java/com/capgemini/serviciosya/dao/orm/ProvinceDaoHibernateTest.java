@@ -85,7 +85,7 @@ public class ProvinceDaoHibernateTest {
 
         List<ProvinceEntity> co=this.dao.findall();
         List<String> l = new ArrayList<>();
-        co.stream().map(Province ->l.add(Province.getName()) );
+        co.stream().map(province ->l.add(province.getName()) );
         Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
 
     }
