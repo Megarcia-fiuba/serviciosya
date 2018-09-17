@@ -5,6 +5,17 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+@NamedQueries ({
+
+        @NamedQuery(
+
+                name  = "ConsumerFindByPhone",
+                query = "from Consumer c where c.phone = :phone"
+        )
+}
+)
+
+
 @Entity(name = "Consumer")
 @Table(name = "consumer")
 public class ConsumerEntity {
@@ -115,5 +126,11 @@ public class ConsumerEntity {
 
     public void setCity(CityEntity city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString () {
+
+        return this.name;
     }
 }

@@ -4,6 +4,8 @@ import com.capgemini.serviciosya.beans.entity.ConsumerEntity;
 
 public interface IConsumerDao extends IDao<ConsumerEntity,Integer> {
 
-    public ConsumerEntity findByFullName(String firstname,String lastname);
-    public ConsumerEntity findByDni(Integer dni);
+    ConsumerEntity findByPhone(String phone);
+    ConsumerEntity findByDni(Integer dni);
+    ConsumerEntity findByEmail(String email);
+
 }

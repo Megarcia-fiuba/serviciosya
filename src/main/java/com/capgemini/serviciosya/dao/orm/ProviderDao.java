@@ -30,7 +30,7 @@ public class ProviderDao implements IProviderDao {
     private SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory ();
 
 
-    private static final Logger logger= Logger.getLogger (com.capgemini.serviciosya.dao.orm.ProviderDao.class);
+    private static final Logger logger= Logger.getLogger (ProviderDao.class);
 
 
     @Override
@@ -58,10 +58,6 @@ public class ProviderDao implements IProviderDao {
         Session session = null;
         Transaction tx = null;
         try {
-
-
-
-
 
             logger.debug ("Getting hibernate session...");
             session = this.sessionFactory.openSession ();
@@ -317,7 +313,7 @@ public class ProviderDao implements IProviderDao {
 
       } catch (Exception e) {
 
-        logger.error ("Error finding a provider by dni");
+        logger.error ("Error finding a provider by phone");
         throw new DaoException (e.getMessage (), e);
 
       } finally {
@@ -326,5 +322,34 @@ public class ProviderDao implements IProviderDao {
       }
 
       return provider;
+    }
+
+    @Override
+    public List<ProviderEntity> findAllByLocation(Integer city_id) {
+        List<ProviderEntity> list = null;
+
+        Session session = null;
+        try {
+            logger.debug ("Getting hibernate session...");
+            session = this.sessionFactory.openSession ();
+
+            logger.debug (String.format ("Finding provider by city %s", city_id.toString()));
+            Criteria criteria = session.createCriteria (ProviderEntity.class);
+            criteria.add (Restrictions.eq ("city", city_id));
+
+            list = (List<ProviderEntity>)criteria.list();
+
+        } catch (Exception e) {
+
+            logger.error ("Error finding all Providers by city");
+            throw new DaoException (e.getMessage (), e);
+
+        } finally {
+
+            session.close ();
+        }
+
+        return list;
+
     }
 }

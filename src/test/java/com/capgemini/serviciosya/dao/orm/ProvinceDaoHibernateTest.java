@@ -1,4 +1,4 @@
-package com.capgemini.serviciosya.service.test.hibernate;
+package com.capgemini.serviciosya.dao.orm;
 
 import com.capgemini.serviciosya.beans.entity.CountryEntity;
 import com.capgemini.serviciosya.beans.entity.ProvinceEntity;
@@ -18,7 +18,7 @@ public class ProvinceDaoHibernateTest {
         ProvinceEntity p = new ProvinceEntity ();
         p.setName ("CABA");
         CountryEntity c = new CountryEntity();
-        c.setId(2);
+        c.setId(1);
         p.setCountry(c);
         this.dao.create (p);
 

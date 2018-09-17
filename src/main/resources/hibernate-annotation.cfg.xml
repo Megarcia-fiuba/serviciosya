@@ -19,7 +19,10 @@
         <mapping class="com.capgemini.serviciosya.beans.entity.ProvinceEntity" />
         <mapping class="com.capgemini.serviciosya.beans.entity.CityEntity" />
         <mapping class="com.capgemini.serviciosya.beans.entity.OccupationEntity" />
+        <mapping class="com.capgemini.serviciosya.beans.entity.ConsumerEntity" />
+        <mapping class="com.capgemini.serviciosya.beans.entity.ProviderEntity" />
 
-	</session-factory>
+
+    </session-factory>
 
 </hibernate-configuration>

@@ -19,7 +19,9 @@ import java.util.Set;
         name  = "ProviderFindByPhone",
         query = "from Provider p where p.phone = :phone"
     )
-})
+}
+)
+
 @Entity (name = "Provider")
 @Table (name = "provider")
 public class ProviderEntity {

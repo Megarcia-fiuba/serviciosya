@@ -1,4 +1,4 @@
-package com.capgemini.serviciosya.service.test.hibernate;
+package com.capgemini.serviciosya.dao.orm;
 
 import com.capgemini.serviciosya.beans.entity.CityEntity;
 import com.capgemini.serviciosya.beans.entity.ProvinceEntity;
