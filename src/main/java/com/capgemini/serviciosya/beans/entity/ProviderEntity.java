@@ -58,7 +58,7 @@ public class ProviderEntity {
     private Integer status;
 
     @ManyToOne
-    @JoinColumn (name="city_id")
+    @JoinColumn (name="city_id", nullable = false)
     private CityEntity city;
 
 

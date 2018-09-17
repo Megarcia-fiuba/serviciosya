@@ -23,6 +23,7 @@ public class ProviderDaoHibernateTest {
     private ProvinceEntity testProvince;
     private CityEntity testCity;
     private OccupationEntity testOccupation;
+    private List<OccupationEntity> testOccupations;
 
     @Before
     @Test
@@ -42,7 +43,7 @@ public class ProviderDaoHibernateTest {
         this.testOccupation.setName("TestOccupation");
         this.testOccupation.setDescription("testing");
         this.oDao.create(this.testOccupation);
-
+        this.testOccupations.add(this.testOccupation);
     }
 
 
@@ -52,8 +53,7 @@ public class ProviderDaoHibernateTest {
         c.setName("TestProvider");
         c.setLastName("testLastname");
         c.setAddress("testaddress");
-        List<OccupationEntity> ocs
-        c.setOccupations(this.testOccupation);
+        c.setOccupations(this.testOccupations);
         c.setCity(this.testCity);
         this.dao.create(c);
 

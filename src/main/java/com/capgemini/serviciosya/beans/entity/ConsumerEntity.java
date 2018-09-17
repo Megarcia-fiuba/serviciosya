@@ -47,7 +47,7 @@ public class ConsumerEntity {
     private String address;
 
     @ManyToOne
-    @JoinColumn (name="city_id")
+    @JoinColumn (name="city_id", nullable = false)
     private CityEntity city;
 
     public ConsumerEntity() {
