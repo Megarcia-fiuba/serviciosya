@@ -11,7 +11,13 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class OccupationDao implements IOccupationDao {
-    private SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory ();
+
+    private SessionFactory sessionFactory ;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
 
 
     private static final Logger logger= Logger.getLogger (OccupationDao.class);

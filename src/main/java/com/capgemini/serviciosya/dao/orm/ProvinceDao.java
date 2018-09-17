@@ -12,7 +12,10 @@ import java.util.List;
 
 public class ProvinceDao implements IProvinceDao {
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory ();
+    private SessionFactory sessionFactory ;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     private static final Logger logger= Logger.getLogger (ProvinceDao.class);

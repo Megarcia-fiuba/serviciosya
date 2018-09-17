@@ -17,8 +17,11 @@ import org.hibernate.Transaction;
 public class CountryDao implements ICountryDao {
 
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory ();
+    private SessionFactory sessionFactory ;
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     private static final Logger logger= Logger.getLogger (CountryDao.class);
 

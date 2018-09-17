@@ -21,7 +21,11 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class ConsumerDao implements IConsumerDao {
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory ();
+    private SessionFactory sessionFactory ;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
 
 
     private static final Logger logger= Logger.getLogger (ConsumerDao.class);

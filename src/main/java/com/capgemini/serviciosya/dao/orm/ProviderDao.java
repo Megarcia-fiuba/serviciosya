@@ -5,7 +5,6 @@ package com.capgemini.serviciosya.dao.orm;
 import com.capgemini.serviciosya.beans.entity.ProviderEntity;
 import com.capgemini.serviciosya.dao.DaoException;
 import com.capgemini.serviciosya.dao.IProviderDao;
-import com.capgemini.serviciosya.dao.orm.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -26,9 +25,11 @@ import java.util.Set;
 
 public class ProviderDao implements IProviderDao {
 
+    private SessionFactory sessionFactory ;
 
-    private SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory ();
-
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     private static final Logger logger= Logger.getLogger (ProviderDao.class);
 
