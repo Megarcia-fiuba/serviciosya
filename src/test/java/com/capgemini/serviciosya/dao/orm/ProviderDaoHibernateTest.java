@@ -7,8 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -23,7 +22,8 @@ public class ProviderDaoHibernateTest {
     private ProvinceEntity testProvince;
     private CityEntity testCity;
     private OccupationEntity testOccupation;
-    private List<OccupationEntity> testOccupations;
+    private Set<OccupationEntity> testOccupations;
+    private ProviderEntity testProvider;
 
     @Before
     @Test
@@ -43,83 +43,69 @@ public class ProviderDaoHibernateTest {
         this.testOccupation.setName("TestOccupation");
         this.testOccupation.setDescription("testing");
         this.oDao.create(this.testOccupation);
+        this.testOccupations= new HashSet<>();
         this.testOccupations.add(this.testOccupation);
+        this.testProvider = new ProviderEntity();
+        this.testProvider.setName("TestConsumer");
+        this.testProvider.setLastName("testLastname");
+        this.testProvider.setAddress("testaddress");
+        this.testProvider.setCity(this.testCity);
+        this.testProvider.setDni(1234);
+        this.testProvider.setPhone("1234");
+        this.testProvider.setEmail("email@gmail.com");
+        this.testProvider.setOccupations(this.testOccupations);
+
     }
 
 
     @Test
     public void testCreate () {
-        ProviderEntity c= new ProviderEntity();
-        c.setName("TestProvider");
-        c.setLastName("testLastname");
-        c.setAddress("testaddress");
-        c.setOccupations(this.testOccupations);
-        c.setCity(this.testCity);
-        this.dao.create(c);
 
-        Assert.assertNotNull ("Failure creating new Provider.", c.getId ());
-        this.dao.delete(c.getId());
+        this.dao.create(this.testProvider);
+
+        Assert.assertNotNull ("Failure creating new Provider.", this.testProvider.getId ());
+        this.dao.delete(this.testProvider.getId());
 
     }
 
     @Test
     public void update() {
-        ProviderEntity c= new ProviderEntity();
-        c.setName("TestProvider");
-        c.setCity(this.testCity);
-        this.dao.create(c);
-        c.setName("TestUpdateProvider");
-        this.dao.update(c);
-        ProviderEntity cu=this.dao.findById(c.getId());
 
-        Assert.assertTrue("Failure updating Provider",cu.getName().equals(c.getName()));
+        this.dao.create(this.testProvider);
+        this.testProvider.setName("TestUpdateProvider");
+        this.dao.update(this.testProvider);
+        ProviderEntity cu=this.dao.findById(this.testProvider.getId());
+
+        Assert.assertTrue("Failure updating Provider",cu.getName().equals(this.testProvider.getName()));
 
     }
 
     @Test
     public void delete() {
-        ProviderEntity c= new ProviderEntity();
-        c.setName("TestProvider");
-        c.setCity(this.testCity);
+        this.dao.create(this.testProvider);
 
-        this.dao.create(c);
-
-        Assert.assertNotNull ("Failure creating new Provider.", c.getId ());
-        this.dao.delete(c.getId());
-        Assert.assertNull ("Failure deleting new Provider.", c.getId());
+        Assert.assertNotNull ("Failure creating new Provider.", this.testProvider.getId ());
+        this.dao.delete(this.testProvider.getId());
+        Assert.assertNull ("Failure deleting new Provider.", this.testProvider.getId());
     }
 
     @Test
     public void findall() {
-        ProviderEntity c= new ProviderEntity();
-        ProviderEntity c2= new ProviderEntity();
-        ProviderEntity c3= new ProviderEntity();
-        c.setName("TestProvider");
-        c.setCity(this.testCity);
-        c2.setName("TestProvider2");
-        c2.setCity(this.testCity);
-        c3.setName("TestProvider3");
-        c3.setCity(this.testCity);
-        this.dao.create(c);
-        this.dao.create(c2);
-        this.dao.create(c3);
+        this.dao.create(this.testProvider);
 
         List<ProviderEntity> co=this.dao.findall();
         List<String> l = new ArrayList<>();
         co.stream().map(Provider ->l.add(Provider.getName()) );
-        Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
+        Assert.assertTrue("failure finding all countries",l.contains(this.testProvider.getName()) );
 
     }
 
     @Test
     public void findById() {
-        ProviderEntity c= new ProviderEntity();
-        c.setName("TestProvider");
-        c.setCity(this.testCity);
-        this.dao.create(c);
-        ProviderEntity cu=this.dao.findById(c.getId());
+        this.dao.create(this.testProvider);
+        ProviderEntity cu=this.dao.findById(this.testProvider.getId());
 
-        Assert.assertTrue("Failure updating Provider",cu.getName().equals(c.getName()));
+        Assert.assertTrue("Failure updating Provider",cu.getName().equals(this.testProvider.getName()));
 
     }
 
@@ -132,19 +118,40 @@ public class ProviderDaoHibernateTest {
         this.oDao.delete(this.testOccupation.getId());
     }
 
-    @Test
-    public void findByEmail() {
-    }
-
-    @Test
-    public void findByDNI() {
-    }
 
     @Test
     public void findByPhone() {
+        this.dao.create(this.testProvider);
+        ProviderEntity cu=this.dao.findById(this.testProvider.getId());
+
+        Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testProvider.getName()));
+
     }
 
     @Test
+    public void findByDni() {
+        this.dao.create(this.testProvider);
+        ProviderEntity cu=this.dao.findByPhone(this.testProvider.getPhone());
+
+        Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testProvider.getName()));
+
+    }
+
+    @Test
+    public void findByEmail() {
+        this.dao.create(this.testProvider);
+        ProviderEntity cu=this.dao.findByEmail(this.testProvider.getEmail());
+
+        Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testProvider.getName()));
+
+    }
+    @Test
     public void findAllByLocation() {
+        this.dao.create(this.testProvider);
+
+        List<ProviderEntity> co=this.dao.findAllByLocation(this.testCity.getId());
+        List<String> l = new ArrayList<>();
+        co.stream().map(Provider ->l.add(Provider.getName()) );
+        Assert.assertTrue("failure finding all countries",l.contains(this.testProvider.getName()) );
     }
 }
