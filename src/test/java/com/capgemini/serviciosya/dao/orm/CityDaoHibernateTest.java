@@ -11,15 +11,20 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CityDaoHibernateTest {
-    private ICountryDao cDao = new CountryDao();
-    private IProvinceDao pDao = new ProvinceDao();
-    private ICityDao dao = new CityDao();
+
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+
+
+    private ICountryDao cDao = context.getBean(CountryDao.class);
+    private IProvinceDao pDao = context.getBean(ProvinceDao.class);
+    private ICityDao dao = context.getBean(CityDao.class);
     private CountryEntity testCountry;
     private ProvinceEntity testProvince;
 

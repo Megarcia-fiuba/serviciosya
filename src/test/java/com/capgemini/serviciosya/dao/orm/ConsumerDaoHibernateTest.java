@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,14 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 
 public class ConsumerDaoHibernateTest {
-    
-    private ICountryDao cDao = new CountryDao();
-    private IProvinceDao pDao = new ProvinceDao();
-    private ICityDao ciDao = new CityDao();
-    private IConsumerDao dao = new ConsumerDao();
+
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+
+
+    private ICountryDao cDao = context.getBean(CountryDao.class);
+    private IProvinceDao pDao = context.getBean(ProvinceDao.class);
+    private ICityDao ciDao = context.getBean(CityDao.class);
+    private IConsumerDao dao = context.getBean(ConsumerDao.class);
     private CountryEntity testCountry;
     private ProvinceEntity testProvince;
     private CityEntity testCity;

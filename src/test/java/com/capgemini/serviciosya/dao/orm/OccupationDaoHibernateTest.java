@@ -5,13 +5,17 @@ import com.capgemini.serviciosya.dao.IOccupationDao;
 import com.capgemini.serviciosya.dao.orm.OccupationDao;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OccupationDaoHibernateTest {
-    private IOccupationDao dao = new OccupationDao();
+
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+
+    private IOccupationDao dao = context.getBean(OccupationDao.class);
 
 
     @Test

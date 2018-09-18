@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,10 @@ import java.util.stream.Collectors;
 
 public class ProvinceDaoHibernateTest {
 
-    private ICountryDao cDao = new CountryDao();
-    private IProvinceDao dao = new ProvinceDao();
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+
+    private ICountryDao cDao = context.getBean(CountryDao.class);
+    private IProvinceDao dao = context.getBean(ProvinceDao.class);
     private CountryEntity testCountry;
 
     @Before
