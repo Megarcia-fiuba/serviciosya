@@ -1,0 +1,56 @@
+<!--
+   - Name: pom.xml
+   - Description: Maven setup file.
+   - Author: Raul Peña (raul.pena@gmail.com)
+   -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <!--
+       - POM setup.
+       -->
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.capgemini</groupId>
+        <artifactId>serviciosya</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>rest-service</artifactId>
+    <name>rest-service</name>
+    <packaging>jar</packaging>
+    <description>API Rest Servicios Ya.</description>
+
+    <developers>
+        <developer>
+            <id>raul.g.pena</id>
+            <name>Raul Peña</name>
+            <email>raul.pena@gmail.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+    <!--
+       - Build setup.
+       -->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
