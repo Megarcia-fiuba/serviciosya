@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -94,8 +95,8 @@ public class ProviderDaoHibernateTest {
         this.dao.create(this.testProvider);
 
         List<ProviderEntity> co=this.dao.findall();
-        List<String> l = new ArrayList<>();
-        co.stream().map(Provider ->l.add(Provider.getName()) );
+        List<String> l =co.stream().map(ProviderEntity::getName).collect(Collectors.toList());
+
         Assert.assertTrue("failure finding all countries",l.contains(this.testProvider.getName()) );
 
     }
@@ -150,8 +151,8 @@ public class ProviderDaoHibernateTest {
         this.dao.create(this.testProvider);
 
         List<ProviderEntity> co=this.dao.findAllByLocation(this.testCity.getId());
-        List<String> l = new ArrayList<>();
-        co.stream().map(Provider ->l.add(Provider.getName()) );
+        List<String> l =co.stream().map(ProviderEntity::getName).collect(Collectors.toList());
+
         Assert.assertTrue("failure finding all countries",l.contains(this.testProvider.getName()) );
     }
 }

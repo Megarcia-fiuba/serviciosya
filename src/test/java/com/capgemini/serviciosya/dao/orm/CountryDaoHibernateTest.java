@@ -4,14 +4,19 @@ import com.capgemini.serviciosya.beans.entity.CountryEntity;
 import com.capgemini.serviciosya.dao.ICountryDao;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
 public class CountryDaoHibernateTest {
-    private ICountryDao dao = new CountryDao();
+
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+
+    private ICountryDao dao = context.getBean(CountryDao.class);
 
 
     @Test
@@ -62,8 +67,7 @@ public class CountryDaoHibernateTest {
         this.dao.create(c3);
 
         List<CountryEntity> co=this.dao.findall();
-        List<String> l = new ArrayList<>();
-        co.stream().map(country ->l.add(country.getName()) );
+        List<String> l =co.stream().map(CountryEntity::getName).collect(Collectors.toList());
         Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
 
     }

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProvinceDaoHibernateTest {
 
@@ -84,8 +85,7 @@ public class ProvinceDaoHibernateTest {
         this.dao.create(c3);
 
         List<ProvinceEntity> co=this.dao.findall();
-        List<String> l = new ArrayList<>();
-        co.stream().map(province ->l.add(province.getName()) );
+        List<String> l =co.stream().map(ProvinceEntity::getName).collect(Collectors.toList());
         Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
 
     }

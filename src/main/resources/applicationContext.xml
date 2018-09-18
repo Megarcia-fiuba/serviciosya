@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
         <property name="url" value="jdbc:postgresql://localhost:5432/serviciosya" />
@@ -39,22 +39,22 @@
         </property>
     </bean>
 
-    <bean id="countryDAO" class= "com.capgemini.serviciosya.dao.orm.ConsumerDao">
+    <bean id="countryDao" class= "com.capgemini.serviciosya.dao.orm.CountryDao">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
-    <bean id="cityDAO" class= "com.capgemini.serviciosya.dao.orm.CityDao">
+    <bean id="cityDao" class= "com.capgemini.serviciosya.dao.orm.CityDao">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
-    <bean id="provinceDAO" class= "com.capgemini.serviciosya.dao.orm.ProvinceDao">
+    <bean id="provinceDao" class= "com.capgemini.serviciosya.dao.orm.ProvinceDao">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
-    <bean id="countryDAO" class= "com.capgemini.serviciosya.dao.orm.ConsumerDao">
+    <bean id="occupationDao" class= "com.capgemini.serviciosya.dao.orm.OccupationDao">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
-    <bean id="countryDAO" class= "com.capgemini.serviciosya.dao.orm.ConsumerDao">
+    <bean id="consumerDao" class= "com.capgemini.serviciosya.dao.orm.ConsumerDao">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
-    <bean id="countryDAO" class= "com.capgemini.serviciosya.dao.orm.ConsumerDao">
+    <bean id="providerDao" class= "com.capgemini.serviciosya.dao.orm.ProviderDao">
         <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
     </bean>
 

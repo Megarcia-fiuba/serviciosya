@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CityDaoHibernateTest {
     private ICountryDao cDao = new CountryDao();
@@ -91,8 +92,8 @@ public class CityDaoHibernateTest {
         this.dao.create(c3);
 
         List<CityEntity> co=this.dao.findall();
-        List<String> l = new ArrayList<>();
-        co.stream().map(city ->l.add(city.getName()) );
+        List<String> l =co.stream().map(CityEntity::getName).collect(Collectors.toList());
+
         Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
 
     }

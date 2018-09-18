@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -83,8 +84,8 @@ public class ConsumerDaoHibernateTest {
         this.dao.create(this.testconsumer);
 
         List<ConsumerEntity> co=this.dao.findall();
-        List<String> l = new ArrayList<>();
-        co.stream().map(Consumer ->l.add(Consumer.getName()) );
+        List<String> l =co.stream().map(ConsumerEntity::getName).collect(Collectors.toList());
+
         Assert.assertTrue("failure finding all countries",l.contains(this.testconsumer.getName()) );
 
     }
