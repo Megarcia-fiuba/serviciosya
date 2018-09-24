@@ -23,6 +23,10 @@ public class CountryEntity {
     public CountryEntity() {
     }
 
+    public CountryEntity(String name) {
+        this.name = name;
+    }
+
     public CountryEntity(int id, String name) {
         this.id = id;
         this.name = name;

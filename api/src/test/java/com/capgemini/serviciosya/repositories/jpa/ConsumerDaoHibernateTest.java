@@ -1,5 +1,5 @@
 package com.capgemini.serviciosya.repositories.jpa;
-
+/*
 import com.capgemini.serviciosya.beans.entity.*;
 import com.capgemini.serviciosya.repositories.jpa.ICityRepository;
 import com.capgemini.serviciosya.repositories.jpa.IConsumerRepository;
@@ -139,3 +139,4 @@ public class ConsumerDaoHibernateTest {
 
     }
 }
+*/

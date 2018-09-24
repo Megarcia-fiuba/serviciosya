@@ -1,12 +1,11 @@
 package com.capgemini.serviciosya.repositories.jpa;
-
+/*
 import com.capgemini.serviciosya.beans.entity.CityEntity;
 import com.capgemini.serviciosya.beans.entity.CountryEntity;
 import com.capgemini.serviciosya.beans.entity.ProvinceEntity;
 import com.capgemini.serviciosya.repositories.jpa.ICityRepository;
 import com.capgemini.serviciosya.repositories.jpa.ICountryRepository;
 import com.capgemini.serviciosya.repositories.jpa.IProvinceRepository;
-import com.capgemini.serviciosya.dao.orm.CityDao;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -121,3 +120,4 @@ public class CityDaoHibernateTest {
         this.pDao.delete(this.testProvince.getId());
     }
 }
+*/

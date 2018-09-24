@@ -1,5 +1,5 @@
 package com.capgemini.serviciosya.repositories.jpa;
-
+/*
 import com.capgemini.serviciosya.beans.entity.*;
 import com.capgemini.serviciosya.repositories.jpa.*;
 import org.junit.After;
@@ -157,4 +157,4 @@ public class ProviderDaoHibernateTest {
 
         Assert.assertTrue("failure finding all countries",l.contains(this.testProvider.getName()) );
     }
-}
+}*/

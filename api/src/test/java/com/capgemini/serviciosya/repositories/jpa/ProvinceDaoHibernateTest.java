@@ -1,5 +1,5 @@
 package com.capgemini.serviciosya.repositories.jpa;
-
+/*
 import com.capgemini.serviciosya.beans.entity.CountryEntity;
 import com.capgemini.serviciosya.beans.entity.ProvinceEntity;
 import com.capgemini.serviciosya.repositories.jpa.ICountryRepository;
@@ -112,3 +112,4 @@ public class ProvinceDaoHibernateTest {
 
 
 }
+*/

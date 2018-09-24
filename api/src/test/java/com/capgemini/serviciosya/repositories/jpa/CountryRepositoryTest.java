@@ -2,86 +2,92 @@ package com.capgemini.serviciosya.repositories.jpa;
 
 import com.capgemini.serviciosya.beans.entity.CountryEntity;
 import com.capgemini.serviciosya.repositories.jpa.ICountryRepository;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE , classes = JpaConfiguration.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CountryRepositoryTest {
 
 
     @Autowired
-    private ICountryRepository dao = null;
+    private ICountryRepository repository = null;
+
 
     private final Logger logger = LoggerFactory.getLogger (CountryRepositoryTest.class);
 
 
-    @Test
-    public void testCreate () {
-        CountryEntity c= new CountryEntity();
-        c.setName("TestCountry");
-        this.dao.save(c);
+    public CountryRepositoryTest () {
 
-        Assert.assertNotNull ("Failure creating new country.", c.getId ());
-        this.dao.delete(c.getId());
+        super ();
+    }
 
+    @Before
+    public void setup () {
+
+        logger.info ("Creating countries...");
+        CountryEntity[] countries = new CountryEntity [] {
+
+                new CountryEntity ( "Argentina"),
+                new CountryEntity ( "Venezuela"),
+                new CountryEntity ( "Uruguay"),
+                new CountryEntity ( "Chile"),
+                new CountryEntity ( "Peru")
+        };
+        logger.debug (String.format ("Objects country created %s", Arrays.toString (countries)));
+
+        logger.debug ("Saving countries...");
+        this.repository.save (Arrays.asList (countries));
+        logger.debug (String.format ("Countries saved %s", Arrays.toString (countries)));
     }
 
     @Test
-    public void update() {
-        CountryEntity c= new CountryEntity();
-        c.setName("TestCountry");
-        this.dao.create(c);
-        c.setName("TestUpdateCountry");
-        this.dao.(c);
-        CountryEntity cu=this.dao.findById(c.getId());
+    public void testCount () {
 
-        Assert.assertTrue("Failure updating country",cu.getName().equals(c.getName()));
+        logger.info ("Counting countries...");
+        Long count = this.repository.count ();
 
+        Assert.assertNotNull ("There are countries...", count);
+        Assert.assertTrue ("There are countries...",count > 0);
     }
 
     @Test
-    public void delete() {
-        CountryEntity c= new CountryEntity();
-        c.setName("TestCountry");
-        this.dao.create(c);
+    public void testGetAll () {
 
-        Assert.assertNotNull ("Failure creating new country.", c.getId ());
-        this.dao.delete(c.getId());
-        Assert.assertNull ("Failure deleting new country.", c.getId());
+        logger.info ("Getting countries...");
+        List<CountryEntity> list = this.repository.findAll ();
+
+        Assert.assertNotNull ("There are countries...", list);
+        Assert.assertFalse ("There are countries...",list.isEmpty ());
     }
 
-    @Test
-    public void findall() {
-        CountryEntity c= new CountryEntity();
-        CountryEntity c2= new CountryEntity();
-        CountryEntity c3= new CountryEntity();
-        c.setName("TestCountry");
-        c2.setName("TestCountry2");
-        c3.setName("TestCountry3");
-        this.dao.create(c);
-        this.dao.create(c2);
-        this.dao.create(c3);
+    @After
+    public void Release () {
 
-        List<CountryEntity> co=this.dao.findall();
-        List<String> l =co.stream().map(CountryEntity::getName).collect(Collectors.toList());
-        Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
+        logger.info ("Deleting countries...");
+        this.repository.deleteAll ();
+        logger.info ("Countries deleted...");
 
+        logger.info ("Getting countries...");
+        List<CountryEntity> list = this.repository.findAll ();
+
+        Assert.assertTrue ("There are not countries...",list.isEmpty ());
     }
 
-    @Test
-    public void findById() {
-        CountryEntity c= new CountryEntity();
-        c.setName("TestCountry");
-        this.dao.create(c);
-        CountryEntity cu=this.dao.findById(c.getId());
 
-        Assert.assertTrue("Failure updating country",cu.getName().equals(c.getName()));
 
-    }
 }

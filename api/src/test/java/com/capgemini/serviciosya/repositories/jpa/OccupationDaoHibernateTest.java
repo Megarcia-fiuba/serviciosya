@@ -2,14 +2,13 @@ package com.capgemini.serviciosya.repositories.jpa;
 
 import com.capgemini.serviciosya.beans.entity.OccupationEntity;
 import com.capgemini.serviciosya.repositories.jpa.IOccupationRepository;
-import com.capgemini.serviciosya.dao.orm.OccupationDao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+/*
 public class OccupationDaoHibernateTest {
 
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
@@ -87,3 +86,4 @@ public class OccupationDaoHibernateTest {
     }
 
 }
+*/
