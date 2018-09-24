@@ -75,6 +75,21 @@ public class CountryRepositoryTest {
         Assert.assertFalse ("There are countries...",list.isEmpty ());
     }
 
+    @Test
+    public void testGetOne () {
+
+        CountryEntity c=new CountryEntity("TestCountry");
+
+        logger.debug ("Saving country...");
+        this.repository.save (c);
+
+        logger.info ("Getting countries...");
+        CountryEntity country = this.repository.findOne (c.getId());
+
+        Assert.assertNotNull ("There is a country...", country);
+        Assert.assertEquals ("There is country...", "TestCountry", country.getName ());
+    }
+
     @After
     public void Release () {
 
