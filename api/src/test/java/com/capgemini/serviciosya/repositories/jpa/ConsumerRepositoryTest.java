@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -77,7 +76,7 @@ public class ConsumerRepositoryTest {
         ConsumerEntity cu=this.dao.findOne(this.testconsumer.getId());
 
         Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testconsumer.getName()));
-
+        this.dao.delete(this.testconsumer.getId());
     }
 
   /*  @Test
@@ -98,6 +97,7 @@ public class ConsumerRepositoryTest {
         List<String> l =co.stream().map(ConsumerEntity::getName).collect(Collectors.toList());
 
         Assert.assertTrue("failure finding all countries",l.contains(this.testconsumer.getName()) );
+        this.dao.delete(this.testconsumer.getId());
 
     }
 
@@ -107,6 +107,7 @@ public class ConsumerRepositoryTest {
         ConsumerEntity cu=this.dao.findOne(this.testconsumer.getId());
 
         Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testconsumer.getName()));
+        this.dao.delete(this.testconsumer.getId());
 
     }
 
@@ -125,6 +126,7 @@ public class ConsumerRepositoryTest {
         ConsumerEntity cu=this.dao.findOneByPhone(this.testconsumer.getPhone());
 
         Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testconsumer.getName()));
+        this.dao.delete(this.testconsumer.getId());
 
     }
 
@@ -134,6 +136,7 @@ public class ConsumerRepositoryTest {
         ConsumerEntity cu=this.dao.findOneByDni(this.testconsumer.getDni());
 
         Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testconsumer.getName()));
+        this.dao.delete(this.testconsumer.getId());
 
     }
 
@@ -143,6 +146,7 @@ public class ConsumerRepositoryTest {
         ConsumerEntity cu=this.dao.findOneByEmail(this.testconsumer.getEmail());
 
         Assert.assertTrue("Failure updating Consumer",cu.getName().equals(this.testconsumer.getName()));
+        this.dao.delete(this.testconsumer.getId());
 
     }
 }
