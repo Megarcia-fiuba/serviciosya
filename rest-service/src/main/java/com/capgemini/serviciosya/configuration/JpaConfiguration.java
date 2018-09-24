@@ -1,4 +1,4 @@
-package com.capgemini.serviciosya.repositories.jpa;
+package com.capgemini.serviciosya.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -25,7 +25,7 @@ public class JpaConfiguration {
     private Environment env = null;
 
 
-    public JpaConfiguration () {
+    public JpaConfiguration() {
 
         super ();
     }

@@ -1,7 +1,7 @@
 package com.capgemini.serviciosya.repositories.jpa;
 /*
 import com.capgemini.serviciosya.beans.entity.*;
-import com.capgemini.serviciosya.repositories.jpa.*;
+import com.capgemini.serviciosya.repositories.configuration.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
