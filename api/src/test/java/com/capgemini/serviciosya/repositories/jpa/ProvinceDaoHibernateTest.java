@@ -1,9 +1,9 @@
-package com.capgemini.serviciosya.dao.orm;
+package com.capgemini.serviciosya.repositories.jpa;
 
 import com.capgemini.serviciosya.beans.entity.CountryEntity;
 import com.capgemini.serviciosya.beans.entity.ProvinceEntity;
-import com.capgemini.serviciosya.dao.ICountryDao;
-import com.capgemini.serviciosya.dao.IProvinceDao;
+import com.capgemini.serviciosya.repositories.jpa.ICountryRepository;
+import com.capgemini.serviciosya.repositories.jpa.IProvinceRepository;
 import com.capgemini.serviciosya.dao.orm.ProvinceDao;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +18,8 @@ public class ProvinceDaoHibernateTest {
 
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
 
-    private ICountryDao cDao = context.getBean(CountryDao.class);
-    private IProvinceDao dao = context.getBean(ProvinceDao.class);
+    private ICountryRepository cDao = context.getBean(CountryDao.class);
+    private IProvinceRepository dao = context.getBean(ProvinceDao.class);
     private CountryEntity testCountry;
 
     @Before

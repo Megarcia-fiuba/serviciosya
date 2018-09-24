@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/serviciosya" />
+        <property name="username" value="postgres" />
+        <property name="password" value="qwerty1234" />
+    </bean>
+
+
+
+    <!-- Hibernate 3 Annotation SessionFactory Bean definition-->
+    <bean id="hibernate3AnnotatedSessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>com.capgemini.serviciosya.beans.entity.ProviderEntity</value>
+                <value>com.capgemini.serviciosya.beans.entity.ConsumerEntity</value>
+                <value>com.capgemini.serviciosya.beans.entity.OccupationEntity</value>
+                <value>com.capgemini.serviciosya.beans.entity.CityEntity</value>
+                <value>com.capgemini.serviciosya.beans.entity.CountryEntity</value>
+                <value>com.capgemini.serviciosya.beans.entity.ProvinceEntity</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="countryDao" class= "com.capgemini.serviciosya.dao.orm.CountryDao">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+    <bean id="cityDao" class= "com.capgemini.serviciosya.dao.orm.CityDao">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+    <bean id="provinceDao" class= "com.capgemini.serviciosya.dao.orm.ProvinceDao">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+    <bean id="occupationDao" class= "com.capgemini.serviciosya.dao.orm.OccupationDao">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+    <bean id="consumerDao" class= "com.capgemini.serviciosya.dao.orm.ConsumerDao">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+    <bean id="providerDao" class= "com.capgemini.serviciosya.dao.orm.ProviderDao">
+        <property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+    </bean>
+
+</beans>

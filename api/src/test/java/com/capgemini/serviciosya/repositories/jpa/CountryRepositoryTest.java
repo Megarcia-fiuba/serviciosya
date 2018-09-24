@@ -1,29 +1,31 @@
-package com.capgemini.serviciosya.dao.orm;
+package com.capgemini.serviciosya.repositories.jpa;
 
 import com.capgemini.serviciosya.beans.entity.CountryEntity;
-import com.capgemini.serviciosya.dao.ICountryDao;
+import com.capgemini.serviciosya.repositories.jpa.ICountryRepository;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+public class CountryRepositoryTest {
 
-public class CountryDaoHibernateTest {
 
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+    @Autowired
+    private ICountryRepository dao = null;
 
-    private ICountryDao dao = context.getBean(CountryDao.class);
+    private final Logger logger = LoggerFactory.getLogger (CountryRepositoryTest.class);
 
 
     @Test
     public void testCreate () {
         CountryEntity c= new CountryEntity();
         c.setName("TestCountry");
-        this.dao.create(c);
+        this.dao.save(c);
 
         Assert.assertNotNull ("Failure creating new country.", c.getId ());
         this.dao.delete(c.getId());
@@ -36,7 +38,7 @@ public class CountryDaoHibernateTest {
         c.setName("TestCountry");
         this.dao.create(c);
         c.setName("TestUpdateCountry");
-        this.dao.update(c);
+        this.dao.(c);
         CountryEntity cu=this.dao.findById(c.getId());
 
         Assert.assertTrue("Failure updating country",cu.getName().equals(c.getName()));
