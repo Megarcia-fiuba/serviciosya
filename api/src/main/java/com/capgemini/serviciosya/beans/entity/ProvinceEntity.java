@@ -31,11 +31,11 @@ public class ProvinceEntity {
         super ();
     }
 
-    public ProvinceEntity (int id, String name) {
+    public ProvinceEntity ( String name,CountryEntity country) {
 
         super ();
 
-        this.id = id;
+        this.country = country;
         this.name = name;
     }
 

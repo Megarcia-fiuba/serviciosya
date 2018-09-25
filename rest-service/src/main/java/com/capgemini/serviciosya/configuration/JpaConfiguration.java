@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.capgemini.serviciosya.repositories.configuration"})
+@EnableJpaRepositories(basePackages = {"com.capgemini.serviciosya.repositories"})
 @EnableTransactionManagement
 public class JpaConfiguration {
 

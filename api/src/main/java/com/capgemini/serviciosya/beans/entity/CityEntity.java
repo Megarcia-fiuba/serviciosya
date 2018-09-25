@@ -23,8 +23,7 @@ public class CityEntity {
     public CityEntity() {
     }
 
-    public CityEntity(int id, String name, ProvinceEntity province) {
-        this.id = id;
+    public CityEntity(  ProvinceEntity province,String name ) {
         this.name = name;
         this.province = province;
     }

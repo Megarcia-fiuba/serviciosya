@@ -1,19 +1,25 @@
 package com.capgemini.serviciosya.repositories.jpa;
 
 import com.capgemini.serviciosya.beans.entity.OccupationEntity;
-import com.capgemini.serviciosya.repositories.jpa.IOccupationRepository;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 import java.util.stream.Collectors;
-/*
-public class OccupationDaoHibernateTest {
 
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext ("applicationContext.xml");
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE , classes = JpaConfiguration.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class OccupationRepositoryTest {
 
-    private IOccupationRepository dao = context.getBean(OccupationDao.class);
+    @Autowired
+    private IOccupationRepository dao = null;
 
 
     @Test
@@ -21,7 +27,7 @@ public class OccupationDaoHibernateTest {
         OccupationEntity o = new OccupationEntity();
         o.setName("Test");
         o.setDescription("testing...");
-        this.dao.create(o);
+        this.dao.save(o);
 
         Assert.assertNotNull ("Failure creating new Occupation.", o.getId ());
     }
@@ -30,10 +36,10 @@ public class OccupationDaoHibernateTest {
         OccupationEntity c= new OccupationEntity();
         c.setName("TestOccupation");
         c.setDescription("testing...");
-        this.dao.create(c);
+        this.dao.save(c);
         c.setName("TestUpdateOccupation");
-        this.dao.update(c);
-        OccupationEntity cu=this.dao.findById(c.getId());
+        this.dao.save(c);
+        OccupationEntity cu=this.dao.findOneById(c.getId());
 
         Assert.assertTrue("Failure updating Occupation",cu.getName().equals(c.getName()));
 
@@ -44,7 +50,7 @@ public class OccupationDaoHibernateTest {
         OccupationEntity c= new OccupationEntity();
         c.setName("TestOccupation");
         c.setDescription("testing...");
-        this.dao.create(c);
+        this.dao.save(c);
 
         Assert.assertNotNull ("Failure creating new Occupation.", c.getId ());
         this.dao.delete(c.getId());
@@ -62,11 +68,11 @@ public class OccupationDaoHibernateTest {
         c2.setDescription("testing...");
         c3.setName("TestOccupation3");
         c3.setDescription("testing...");
-        this.dao.create(c);
-        this.dao.create(c2);
-        this.dao.create(c3);
+        this.dao.save(c);
+        this.dao.save(c2);
+        this.dao.save(c3);
 
-        List<OccupationEntity> co=this.dao.findall();
+        List<OccupationEntity> co=this.dao.findAll();
         List<String> l =co.stream().map(OccupationEntity::getName).collect(Collectors.toList());
 
         Assert.assertTrue("failure finding all countries",l.contains(c.getName()) && l.contains(c2.getName())&& l.contains(c3.getName()));
@@ -78,12 +84,28 @@ public class OccupationDaoHibernateTest {
         OccupationEntity c= new OccupationEntity();
         c.setName("TestOccupation");
         c.setDescription("testing...");
-        this.dao.create(c);
-        OccupationEntity cu=this.dao.findById(c.getId());
+        this.dao.save(c);
+        OccupationEntity cu=this.dao.findOneById(c.getId());
 
         Assert.assertTrue("Failure updating Occupation",cu.getName().equals(c.getName()));
 
     }
 
+    @Test
+    public void findParent(){
+        OccupationEntity c= new OccupationEntity();
+        OccupationEntity c2= new OccupationEntity();
+        c.setName("TestOccupation");
+        c.setDescription("testing...");
+        c2.setName("TestOccupation2");
+        c2.setDescription("testing...");
+        this.dao.save(c);
+        c2.setOccupation(c);
+        this.dao.save(c2);
+
+        OccupationEntity c3= this.dao.findOneById(c2.getId()).getOccupation();
+
+        Assert.assertTrue("Failure finding parent Occupation",c3.getName().equals(c2.getName()));
+    }
+
 }
-*/

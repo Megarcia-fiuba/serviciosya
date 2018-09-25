@@ -12,19 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("country")
 public class CountryController {
 
-    private ICountryRepository countryRepository;
+    @Autowired
+    private ICountryRepository countryRepository=null;
 
     public CountryController() {
 
         super ();
     }
-
-    @Autowired
-    public void setCountryRepository (ICountryRepository countryRepository) {
-
-        this.countryRepository = countryRepository;
-    }
-
 
     @RequestMapping (method = RequestMethod.GET, produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get () {
