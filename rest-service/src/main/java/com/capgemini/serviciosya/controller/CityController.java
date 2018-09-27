@@ -5,10 +5,7 @@ import com.capgemini.serviciosya.repositories.jpa.ICityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("cities")
@@ -31,7 +28,7 @@ public class CityController {
     }
 
     @RequestMapping (value="/{id}",method = RequestMethod.GET, produces={MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> get (@PathVariable Integer id) {
+    public ResponseEntity<?> getall (@PathVariable Integer id) {
 
         CityEntity city= this.cityDao.findOne(id);
         if(city==null){
@@ -41,9 +38,9 @@ public class CityController {
         return ResponseEntity.ok (city);
     }
     @RequestMapping (method = RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> get  {
-
-        RestTemplate
+    public ResponseEntity<?> add(@RequestBody CityEntity cityEntity)  {
+        this.cityDao.save(cityEntity);
+        return ResponseEntity.ok(cityEntity);
     }
 
 
