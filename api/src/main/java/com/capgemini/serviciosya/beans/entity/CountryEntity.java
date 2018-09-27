@@ -17,8 +17,8 @@ public class CountryEntity {
     @Column (name= "name", length = 48, nullable = false)
     private String name;
 
-    @OneToMany (mappedBy = "country", fetch = FetchType.EAGER)
-    private Set<ProvinceEntity> provinces = new HashSet<>();
+    //@OneToMany (mappedBy = "country", fetch = FetchType.EAGER)
+   // private Set<ProvinceEntity> provinces = new HashSet<>();
 
     public CountryEntity() {
     }
@@ -48,7 +48,7 @@ public class CountryEntity {
         this.name = name;
     }
 
-    public Set<ProvinceEntity> getProvinces(){
-        return provinces;
-    }
+    //public Set<ProvinceEntity> getProvinces(){
+      //  return provinces;
+    //}
 }

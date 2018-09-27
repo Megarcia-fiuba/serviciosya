@@ -39,9 +39,29 @@ public class CityController {
     }
     @RequestMapping (method = RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> add(@RequestBody CityEntity cityEntity)  {
-        this.cityDao.save(cityEntity);
-        return ResponseEntity.ok(cityEntity);
+        CityEntity c=new CityEntity(cityEntity.getProvince(),cityEntity.getName());
+        this.cityDao.save(c);
+        return ResponseEntity.ok(c);
+   }
+
+    @RequestMapping (method = RequestMethod.PUT, produces={MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> update(@RequestBody CityEntity cityEntity) {
+        if (this.cityDao.findOne(cityEntity.getId()) != null) {
+            this.cityDao.save(cityEntity);
+            return ResponseEntity.ok(cityEntity);
+        }
+        return ResponseEntity.notFound().build();
     }
 
+
+
+    @RequestMapping (value= "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable Integer id)  {
+        if(this.cityDao.findOne(id)!=null){
+            this.cityDao.delete(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }

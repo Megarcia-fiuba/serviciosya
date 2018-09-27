@@ -1,8 +1,10 @@
 package com.capgemini.serviciosya.controller;
 
 import com.capgemini.serviciosya.beans.entity.ProvinceEntity;
+import com.capgemini.serviciosya.repositories.jpa.ICityRepository;
 import com.capgemini.serviciosya.repositories.jpa.IProvinceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ public class ProvinceController {
 
     @Autowired
     private IProvinceRepository provinceRepository;
+
+    @Autowired
+    private ICityRepository cityRepository;
 
     @RequestMapping (method = RequestMethod.GET, produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> get () {
@@ -34,9 +39,30 @@ public class ProvinceController {
 
     @RequestMapping (method = RequestMethod.POST, produces={MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> add(@RequestBody ProvinceEntity provinceEntity)  {
-        this.provinceRepository.save(provinceEntity);
-        return ResponseEntity.ok(provinceEntity);
+         ProvinceEntity p= new ProvinceEntity(provinceEntity.getName(),provinceEntity.getCountry());
+         this.provinceRepository.save(p);
+         return ResponseEntity.ok(p);
     }
 
+    @RequestMapping (method = RequestMethod.PUT, produces={MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> update(@RequestBody ProvinceEntity provinceEntity) {
+        if (this.provinceRepository.findOne(provinceEntity.getId()) != null) {
+            this.provinceRepository.save(provinceEntity);
+            return ResponseEntity.ok(provinceEntity);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @RequestMapping (value= "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable Integer id)  {
+        if(this.provinceRepository.findOne(id)!=null){
+            if(this.cityRepository.findAllByProvince(this.provinceRepository.findOne(id)).isEmpty()) {
+                this.provinceRepository.delete(id);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("No se puede eliminar Provincia referenciada por Ciudad");
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
