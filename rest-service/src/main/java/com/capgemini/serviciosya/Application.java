@@ -1,22 +1,24 @@
+
 package com.capgemini.serviciosya;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+
 
 @SpringBootApplication
 public class Application {
+    
+	
 
+	  public Application () {
 
+		    super ();
+	  }
+		
 
-    public Application () {
+	  public static void main (String[] args) {
 
-        super ();
-    }
-
-
-    public static void main (String[] args) {
-
-        SpringApplication.run (Application.class);
-    }
+		    SpringApplication.run (Application.class);
+	  }
 }
