@@ -25,7 +25,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 
 @Configuration
-@EnableJpaRepositories (basePackages = {"com.capgemeini.serviciosya.dao"})
+@EnableJpaRepositories (basePackages = {"com.capgemini.serviciosya.repositories.jpa"})
 @EnableTransactionManagement
 public class JpaConfiguration {
 
