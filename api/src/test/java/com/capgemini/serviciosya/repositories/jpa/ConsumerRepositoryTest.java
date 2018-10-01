@@ -60,7 +60,6 @@ public class ConsumerRepositoryTest {
 
     @Test
     public void testCreate () {
-        this.testconsumer.setId(99);
         this.dao.save(this.testconsumer);
 
         Assert.assertNotNull ("Failure creating new Consumer.", this.testconsumer.getId ());

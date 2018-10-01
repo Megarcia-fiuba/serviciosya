@@ -210,3 +210,46 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.occupation_x_provider
     OWNER to postgres;
+
+-- SEQUENCE: public.consumer_id_seq
+
+-- DROP SEQUENCE public.consumer_id_seq;
+
+CREATE SEQUENCE public.consumer_id_seq;
+
+ALTER SEQUENCE public.consumer_id_seq
+    OWNER TO postgres;
+
+-- Table: public.consumer
+
+-- DROP TABLE public.consumer;
+
+CREATE TABLE public.consumer
+(
+    id integer NOT NULL DEFAULT nextval('consumer_id_seq'::regclass),
+    address character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    dni integer NOT NULL,
+    email character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    lastname character varying(48) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(48) COLLATE pg_catalog."default" NOT NULL,
+    phone character varying(48) COLLATE pg_catalog."default" NOT NULL,
+    city_id integer NOT NULL,
+    CONSTRAINT consumer_pkey PRIMARY KEY (id),
+    CONSTRAINT "uk_Phone" UNIQUE (phone)
+,
+    CONSTRAINT uk_dni UNIQUE (dni)
+,
+    CONSTRAINT uk_email UNIQUE (email)
+,
+    CONSTRAINT fk_city_id FOREIGN KEY (city_id)
+        REFERENCES public.city (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.consumer
+    OWNER to postgres;
