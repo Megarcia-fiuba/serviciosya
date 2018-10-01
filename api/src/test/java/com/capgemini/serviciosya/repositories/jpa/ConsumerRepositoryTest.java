@@ -34,7 +34,6 @@ public class ConsumerRepositoryTest {
     private ConsumerEntity testconsumer;
 
     @Before
-    @Test
     public void init(){
         this.testCountry= new CountryEntity();
         this.testCountry.setName("testCountry");
@@ -111,14 +110,6 @@ public class ConsumerRepositoryTest {
 
     }
 
-    /*@After
-    @Test
-    public void testafter(){
-        this.cDao.delete(this.testCountry.getId());
-        this.pDao.delete(this.testProvince.getId());
-        this.ciDao.delete(this.testCity.getId());
-    }
-*/
 
     @Test
     public void findByPhone() {
@@ -149,4 +140,13 @@ public class ConsumerRepositoryTest {
         this.dao.delete(this.testconsumer.getId());
 
     }
+/*
+    @After
+    public void testafter(){
+        this.ciDao.delete(this.testCity.getId());
+        this.pDao.delete(this.testProvince.getId());
+        this.cDao.delete(this.testCountry.getId());
+    }
+*/
+
 }
