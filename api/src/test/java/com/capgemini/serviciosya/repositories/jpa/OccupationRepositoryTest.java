@@ -54,7 +54,8 @@ public class OccupationRepositoryTest {
 
         Assert.assertNotNull ("Failure creating new Occupation.", c.getId ());
         this.dao.delete(c.getId());
-        Assert.assertNull ("Failure deleting new Occupation.", c.getId());
+        OccupationEntity oc =this.dao.findOneById(c.getId());
+        Assert.assertNull ("Failure deleting new Occupation.",oc);
     }
 
     @Test
@@ -105,7 +106,7 @@ public class OccupationRepositoryTest {
 
         OccupationEntity c3= this.dao.findOneById(c2.getId()).getOccupation();
 
-        Assert.assertTrue("Failure finding parent Occupation",c3.getName().equals(c2.getName()));
+        Assert.assertTrue("Failure finding parent Occupation ",c3.getName().equals(c.getName()));
     }
 
 }

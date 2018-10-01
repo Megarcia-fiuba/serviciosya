@@ -78,6 +78,7 @@ public class CityRepositoryTest {
         logger.debug (String.format ("Cities saved %s", Arrays.toString (cities)));
     }
 
+
     @Test
     public void testGetAllByProvince () {
 
@@ -90,6 +91,5 @@ public class CityRepositoryTest {
         Assert.assertNotNull ("There are cities...", list);
         Assert.assertFalse ("There are cities...",list.isEmpty ());
     }
-
 
 }

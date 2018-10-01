@@ -107,6 +107,7 @@ public class ProvinceRepositoryTest {
         Assert.assertEquals ("There is country...", "TestProvince", province.getName ());
     }
 
+    /*
     @After
     public void Release () {
         logger.info ("Deleting provinces...");
@@ -127,7 +128,7 @@ public class ProvinceRepositoryTest {
 
         Assert.assertTrue ("There are not countries...",listco.isEmpty ());
     }
-
+*/
 
 
 }

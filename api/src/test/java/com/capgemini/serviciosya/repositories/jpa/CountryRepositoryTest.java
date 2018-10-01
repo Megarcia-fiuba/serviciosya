@@ -90,7 +90,7 @@ public class CountryRepositoryTest {
         Assert.assertEquals ("There is country...", "TestCountry", country.getName ());
     }
 
-    @After
+    /*@After
     public void Release () {
 
         logger.info ("Deleting countries...");
@@ -102,7 +102,7 @@ public class CountryRepositoryTest {
 
         Assert.assertTrue ("There are not countries...",list.isEmpty ());
     }
-
+*/
 
 
 }
